@@ -39,9 +39,7 @@ jobs:
           -Dsonar.host.url=${{ secrets.SONAR_URL }}
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-          -Dsonar.branch.name=${GITHUB_REF:11}
-          -Dsonar.scm.provider=git
-
+  
       - if: endsWith(github.REF, '/master') == true
         name: 'Run an analysis of the master branch'
         env:
@@ -51,5 +49,3 @@ jobs:
           -Dsonar.host.url=${{ secrets.SONAR_URL }}
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-          -Dsonar.scm.provider=git
-          -Dsonar.java.binaries=/tmp
