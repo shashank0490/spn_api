@@ -1,4 +1,4 @@
-# Start by giving a name to your workflow
+# Start by giving a name to your  workflow
 name: Analyze branch
 
 # then define on which event, here a push
