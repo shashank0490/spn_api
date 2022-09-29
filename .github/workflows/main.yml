@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@master
         with:
           fetch-depth: 0
-      # Use an existing action, you can look in the market place to find what you need and how to use it, to setup the sonar scanner
+      # Use an existing action, you can look in the market place to find what you  need and how to use it, to setup the sonar scanner
       - name: SonarQube Scan
         uses: kitabisa/sonarqube-action@master
         with:
