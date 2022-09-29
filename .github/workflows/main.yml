@@ -1,7 +1,4 @@
-# Start by giving a name to your  workflow
-name: Analyze branch
-
-# then define on which event, here a push
+#  define on which event, here a push
 on:
   push:
   # and the target with some regex to match our specific  branch names
@@ -10,42 +7,30 @@ on:
       - 'JAHIA-[0-9]-[0-9]-[0-9]-X-BRANCH'
       - '[0-9]_[0-9]_x'
       - '[0-9]-[0-9]-X-BRANCH'
+  pull_request:
+    types: [opened,synchronized,reopened]
 
 # We can now build our job
+# giving a name to your  workflow
+name: Analyze branch
 jobs:
-  build:
-
+  sonarqube:
+    name: SonarQube Trigger
     runs-on: ubuntu-latest
-
     steps:
+      - name: 'Checkout repository on master'
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
       # Use an existing action, you can look in the market place to find what you need and how to use it, to setup the sonar scanner
-      - name: Setup sonar scanner
-        uses: warchant/setup-sonar-scanner@v1
+      - name: SonarQube Scan
+        uses: kitabisa/sonarqube-action@master
+        with:
+          host: ${{ secrets.SONAR_URL }}
+          login: ${{ secrets.SONAR_TOKEN }}
+          projectKey: ${{ secrets.SONAR_PROJECT_KEY }}
 
       # Another existing action, this one to checkout the repository
-      - name: 'Checkout repository on branch: ${{ github.REF }}'
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.REF }}
-          fetch-depth: 0
+      
 
-      # Conditional execution can be done, in this case the parameter to use with sonar scanner are different if we are analyzing master or a branch
-      - if: endsWith(github.REF, '/master') != true
-        name: 'Run an analysis of the ${{ github.REF }} branch'
-        env:
-          # to get access to secrets.SONAR_TOKEN, provide GITHUB_TOKEN
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        run: sonar-scanner
-          -Dsonar.host.url=${{ secrets.SONAR_URL }}
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-  
-      - if: endsWith(github.REF, '/master') == true
-        name: 'Run an analysis of the master branch'
-        env:
-          # to get access to secrets.SONAR_TOKEN, provide GITHUB_TOKEN
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        run: sonar-scanner
-          -Dsonar.host.url=${{ secrets.SONAR_URL }}
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+    
