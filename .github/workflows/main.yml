@@ -26,8 +26,8 @@ jobs:
       - name: SonarQube Scan
         uses: kitabisa/sonarqube-action@master
         with:
-          host: http://34.228.55.143:9000/
-          login: 486f4cb40573dbdf43f339ba5257217b626574de
+          host: ${{ secrets.SONAR_URL }}
+          login: ${{ secrets.SONAR_TOKEN }}
           projectKey: "spn_api"
 
 
