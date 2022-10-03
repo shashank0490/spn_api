@@ -1,4 +1,4 @@
-exports = Sequelize = require('sequelize')
+exports = Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const operatorsAliases = {
     $eq: Op.eq,
