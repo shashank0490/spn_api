@@ -21,9 +21,15 @@ jobs:
       - name: SonarQube Scan
         uses: kitabisa/sonarqube-action@master
         with:
-          host: ${{ secrets.SONAR_URL }}
-          login: ${{ secrets.SONAR_TOKEN }}
+          host: ""
+          login: ""
           projectKey: "spn_api"
+
+
+      
+
+    
+
 
 
       
