@@ -3,12 +3,7 @@ on:
   push:
   # and the target with some regex to match our specific  branch names
     branches:
-      - master
-      - 'JAHIA-[0-9]-[0-9]-[0-9]-X-BRANCH'
-      - '[0-9]_[0-9]_x'
-      - '[0-9]-[0-9]-X-BRANCH'
-  pull_request:
-    types: [opened,synchronized,reopened]
+      - development
 
 # We can now build our job
 # giving a name to your  workflow
