@@ -1,0 +1,29 @@
+#  define on which event, here a push
+on:
+  push:
+  # and the target with some regex to match our specific  branch names
+    branches:
+      - development
+
+  pull_request:
+    types: [opened,synchronized,reopened]
+
+# We can now build our job
+# giving a name to your  workflow
+name: Analyze branch
+jobs:
+  sonarqube:
+    name: SonarQube Trigger
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout repository on master'
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      # Use an existing action, you can look in the market place to find what you need and how to use it, to setup the sonar scanner
+      - name: SonarQube Scan
+        uses: kitabisa/sonarqube-action@master
+        with:
+          host: "admin-api"
+          login: "b0491f9c24c4e745c929461380b12ab20f8c4065"
+          projectKey: "spn_api"
